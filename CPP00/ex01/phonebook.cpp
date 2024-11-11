@@ -1,6 +1,81 @@
 #include <iostream>
 #include <iomanip>
 
+std::string toUpper(const std::string& str) {
+	std::string upperStr = str;
+	for (char *p = &upperStr[0]; *p; ++p)
+		*p = std::toupper(*p);
+	return upperStr;
+}
+
+int ftAtoi(const std::string& str) {
+	int res = 0, sign = 1;
+	size_t i = 0;
+	while (i < str.length() && str[i] >= 9 && str[i] <= 32)
+		i++;
+	if (i < str.length() && (str[i] == '-' || str[i] == '+')) {
+		if (str[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (i < str.length() && str[i] >= '0' && str[i] <= '9') {
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+	return sign * res;
+}
+
+int utf8len(const std::string& str) {
+	size_t i = 0;
+	int cCount = 0;
+	while (i < str.size()) {
+		if ((str[i] & 0x80) == 0x00)
+			i += 1;
+		else if ((str[i] & 0xE0) == 0xC0)
+			i += 2;
+		else if ((str[i] & 0xF0) == 0xE0)
+			i += 3;
+		else if ((str[i] & 0xF8) == 0xF0)
+			i += 4;
+		else
+			i++;
+		cCount++;
+	}
+	return cCount;
+}
+
+size_t utf8ByteIndex(const std::string& str, int cPos) {
+	size_t i = 0;
+	int cCount = 0;
+	while (i < str.size() && cCount < cPos) {
+		if ((str[i] & 0x80) == 0x00)
+			i += 1;
+		else if ((str[i] & 0xE0) == 0xC0)
+			i += 2;
+		else if ((str[i] & 0xF0) == 0xE0)
+			i += 3;
+		else if ((str[i] & 0xF8) == 0xF0)
+			i += 4;
+		else
+			i++;
+		cCount++;
+	}
+	return i;
+}
+
+std::string utf8substr(const std::string& str, int start, int length) {
+	size_t byteStart = utf8ByteIndex(str, start);
+	size_t byteEnd = utf8ByteIndex(str, start + length);
+	return str.substr(byteStart, byteEnd - byteStart);
+}
+
+std::string getInfo(std::string& str) {
+	int info_len = utf8len(str);
+	if (info_len > 10)
+		return utf8substr(str, 0, 9) + ".";
+	return std::string(10 - info_len, ' ') + str;
+};
+
 class Contact {
 public:
 	std::string firstName;
@@ -57,12 +132,9 @@ public:
 			<< std::setw(10) << std::right << "Last Name" << " | "
 			<< std::setw(10) << std::right << "Nickname" << " | " << std::endl;
 		for (int i = 0; i < contactCount; i++) {
-			std::string firstName = contacts[i].firstName;
-			std::string lastName = contacts[i].lastName;
-			std::string nickname = contacts[i].nickname;
-			if (firstName.length() > 10) firstName = firstName.substr(0, 9) + ".";
-			if (lastName.length() > 10) lastName = lastName.substr(0, 9) + ".";
-			if (nickname.length() > 10) nickname = nickname.substr(0, 9) + ".";
+			std::string firstName = getInfo(contacts[i].firstName);
+			std::string lastName = getInfo(contacts[i].lastName);
+			std::string nickname = getInfo(contacts[i].nickname);
 			std::cout << std::setw(10) << std::right << i << " | "
 				<< std::setw(10) << std::right << firstName << " | "
 				<< std::setw(10) << std::right << lastName << " | "
@@ -71,21 +143,14 @@ public:
 		std::cout << "Enter index to display contact info: ";
 		std::string input;
 		std::getline(std::cin, input);
-		int index = std::stoi(input);
+		int index = ftAtoi(input);
 		if (index < 0 || index >= contactCount) {
-			std::cout << "Invalid index." << std::endl;
+			std::cerr << "Invalid index." << std::endl;
 			return;
 		}
 		contacts[index].showContact();
 	}
 };
-
-std::string toUpper(const std::string& str) {
-	std::string upperStr = str;
-	for (char *p = &upperStr[0]; *p; ++p)
-		*p = std::toupper(*p);
-	return upperStr;
-}
 
 int main() {
 	PhoneBook phoneBook;
@@ -98,7 +163,7 @@ int main() {
 		if (command == "ADD") phoneBook.addContact();
 		else if (command == "SEARCH") phoneBook.searchContact();
 		else if (command == "EXIT") break;
-		else std::cout << "Err: Invalid command!" << std::endl;
+		else std::cerr << "Err: Invalid command!" << std::endl;
 	}
 	return 0;
 }
