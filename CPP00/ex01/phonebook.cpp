@@ -8,7 +8,7 @@ std::string toUpper(const std::string& str) {
 	return upperStr;
 }
 
-int ftAtoi(const std::string& str) {
+int ftAtoi(const std::string& str, int& err) {
 	int res = 0, sign = 1;
 	size_t i = 0;
 	while (i < str.length() && str[i] >= 9 && str[i] <= 32)
@@ -18,6 +18,8 @@ int ftAtoi(const std::string& str) {
 			sign = -sign;
 		i++;
 	}
+	if (!(str[i] >= '0' && str[i] <= '9'))
+		err++;
 	while (i < str.length() && str[i] >= '0' && str[i] <= '9') {
 		res = res * 10 + (str[i] - '0');
 		i++;
@@ -143,8 +145,9 @@ public:
 		std::cout << "Enter index to display contact info: ";
 		std::string input;
 		std::getline(std::cin, input);
-		int index = ftAtoi(input);
-		if (index < 0 || index >= contactCount) {
+		int err = 0;
+		int index = ftAtoi(input, err);
+		if (index < 0 || index >= contactCount || err > 0) {
 			std::cerr << "Invalid index." << std::endl;
 			return;
 		}
