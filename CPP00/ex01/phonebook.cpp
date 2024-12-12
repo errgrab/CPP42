@@ -88,15 +88,15 @@ public:
 
 	void getContact() {
 		std::cout << "Enter first name: ";
-		std::getline(std::cin, firstName);
+		if (!std::getline(std::cin, firstName) || std::cin.eof()) return;
 		std::cout << "Enter last name: ";
-		std::getline(std::cin, lastName);
+		if (!std::getline(std::cin, lastName) || std::cin.eof()) return;
 		std::cout << "Enter nickname: ";
-		std::getline(std::cin, nickname);
+		if (!std::getline(std::cin, nickname) || std::cin.eof()) return;
 		std::cout << "Enter phone number: ";
-		std::getline(std::cin, phoneNumber);
+		if (!std::getline(std::cin, phoneNumber) || std::cin.eof()) return;
 		std::cout << "Enter darkest secret: ";
-		std::getline(std::cin, darkestSecret);
+		if (!std::getline(std::cin, darkestSecret) || std::cin.eof()) return;
 	}
 
 	void showContact() {
@@ -159,11 +159,12 @@ int main() {
 	PhoneBook phoneBook;
 
 	while (true) {
-		std::cout << "Enter command (ADD, SEARCH, EXIT): ";
+		if (!std::cin.eof()) std::cout << "Enter command (ADD, SEARCH, EXIT): ";
 		std::string command;
 		std::getline(std::cin, command);
 		command = toUpper(command);
-		if (command == "ADD") phoneBook.addContact();
+		if (std::cin.eof()) break;
+		else if (command == "ADD") phoneBook.addContact();
 		else if (command == "SEARCH") phoneBook.searchContact();
 		else if (command == "EXIT") break;
 		else std::cerr << "Err: Invalid command!" << std::endl;
