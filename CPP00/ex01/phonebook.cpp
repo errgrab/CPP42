@@ -71,40 +71,52 @@ std::string utf8substr(const std::string& str, int start, int length) {
 	return str.substr(byteStart, byteEnd - byteStart);
 }
 
-std::string getInfo(std::string& str) {
+std::string getInfo(const std::string& str) {
 	int info_len = utf8len(str);
 	if (info_len > 10)
 		return utf8substr(str, 0, 9) + ".";
 	return std::string(10 - info_len, ' ') + str;
 };
-
 class Contact {
-public:
+private:
 	std::string firstName;
 	std::string lastName;
 	std::string nickname;
 	std::string phoneNumber;
 	std::string darkestSecret;
 
+public:
 	void getContact() {
 		std::cout << "Enter first name: ";
-		std::getline(std::cin, firstName);
+		if (!std::getline(std::cin, firstName) || std::cin.eof()) return;
 		std::cout << "Enter last name: ";
-		std::getline(std::cin, lastName);
+		if (!std::getline(std::cin, lastName) || std::cin.eof()) return;
 		std::cout << "Enter nickname: ";
-		std::getline(std::cin, nickname);
+		if (!std::getline(std::cin, nickname) || std::cin.eof()) return;
 		std::cout << "Enter phone number: ";
-		std::getline(std::cin, phoneNumber);
+		if (!std::getline(std::cin, phoneNumber) || std::cin.eof()) return;
 		std::cout << "Enter darkest secret: ";
-		std::getline(std::cin, darkestSecret);
+		if (!std::getline(std::cin, darkestSecret) || std::cin.eof()) return;
 	}
 
-	void showContact() {
+	void showContact() const {
 		std::cout << "First Name: " << firstName << std::endl;
 		std::cout << "Last Name: " << lastName << std::endl;
 		std::cout << "Nickname: " << nickname << std::endl;
 		std::cout << "Phone Number: " << phoneNumber << std::endl;
 		std::cout << "Darkest Secret: " << darkestSecret << std::endl;
+	}
+
+	std::string getFirstName() const {
+		return firstName;
+	}
+
+	std::string getLastName() const {
+		return lastName;
+	}
+
+	std::string getNickname() const {
+		return nickname;
 	}
 };
 
@@ -124,7 +136,7 @@ public:
 		}
 	}
 
-	void searchContact() {
+	void searchContact() const {
 		if (contactCount == 0) {
 			std::cout << "No contacts found." << std::endl;
 			return;
@@ -134,9 +146,12 @@ public:
 			<< std::setw(10) << std::right << "Last Name" << " | "
 			<< std::setw(10) << std::right << "Nickname" << " | " << std::endl;
 		for (int i = 0; i < contactCount; i++) {
-			std::string firstName = getInfo(contacts[i].firstName);
-			std::string lastName = getInfo(contacts[i].lastName);
-			std::string nickname = getInfo(contacts[i].nickname);
+			std::string firstNameStr = contacts[i].getFirstName();
+			std::string lastNameStr = contacts[i].getLastName();
+			std::string nicknameStr = contacts[i].getNickname();
+			std::string firstName = getInfo(firstNameStr);
+			std::string lastName = getInfo(lastNameStr);
+			std::string nickname = getInfo(nicknameStr);
 			std::cout << std::setw(10) << std::right << i << " | "
 				<< std::setw(10) << std::right << firstName << " | "
 				<< std::setw(10) << std::right << lastName << " | "
@@ -159,11 +174,12 @@ int main() {
 	PhoneBook phoneBook;
 
 	while (true) {
-		std::cout << "Enter command (ADD, SEARCH, EXIT): ";
+		if (!std::cin.eof()) std::cout << "Enter command (ADD, SEARCH, EXIT): ";
 		std::string command;
 		std::getline(std::cin, command);
 		command = toUpper(command);
-		if (command == "ADD") phoneBook.addContact();
+		if (std::cin.eof()) break;
+		else if (command == "ADD") phoneBook.addContact();
 		else if (command == "SEARCH") phoneBook.searchContact();
 		else if (command == "EXIT") break;
 		else std::cerr << "Err: Invalid command!" << std::endl;
