@@ -1,4 +1,5 @@
 #include "Zombie.hpp"
+#include <iostream>
 #include <sstream>
 
 int main(int ac, char **av) {
