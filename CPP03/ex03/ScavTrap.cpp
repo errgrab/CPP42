@@ -6,7 +6,7 @@ ScavTrap::ScavTrap() : ClapTrap("ScavTrap", 100, 50, 20) {
     std::cout << "ScavTrap default constructor called" << std::endl;
 }
 
-ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name, 100, 50, 20) {
+ScavTrap::ScavTrap(const std::string name) : ClapTrap(name, 100, 50, 20) {
     std::cout << "ScavTrap name constructor called" << std::endl;
 }
 
@@ -22,6 +22,10 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& scavTrap) {
     ClapTrap::operator=(scavTrap);
     std::cout << "ScavTrap assignation operator called" << std::endl;
     return *this;
+}
+
+void ScavTrap::attack(const std::string target) {
+    std::cout << "ScavTrap " << getName() << " attacks " << target << ", causing " << getAttackDamage() << " points of damage!" << std::endl;
 }
 
 void ScavTrap::guardGate() {
