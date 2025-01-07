@@ -1,22 +1,23 @@
 #include "Animal.hpp"
+#include <iostream>
 
-Animal::Animal() : _type("Animal"), _brain(new Brain()) {
+Animal::Animal() : type("Animal"), brain(new Brain()) {
     std::cout << "Animal default constructor called" << std::endl;
 }
 
 Animal::~Animal() {
-    delete _brain;
+    delete brain;
     std::cout << "Animal destructor called" << std::endl;
 }
 
-Animal::Animal(const Animal& animal) : _type(animal._type) {
+Animal::Animal(const Animal& animal) : type(animal.type) {
     std::cout << "Animal copy constructor called" << std::endl;
 }
 
 Animal& Animal::operator=(const Animal& animal) {
     std::cout << "Animal copy assignment operator called" << std::endl;
     if (this != &animal)
-        _type = animal._type;
+        type = animal.type;
     return *this;
 }
 
@@ -25,9 +26,9 @@ void Animal::makeSound() const {
 }
 
 const std::string& Animal::getType() const {
-    return _type;
+    return type;
 }
 
 Brain* Animal::getBrain() const {
-    return _brain;
+    return brain;
 }

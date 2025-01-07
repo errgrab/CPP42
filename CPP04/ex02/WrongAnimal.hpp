@@ -1,11 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 
 class WrongAnimal {
 protected:
-    std::string _type;
+    std::string type;
 public:
     WrongAnimal();
     virtual ~WrongAnimal();

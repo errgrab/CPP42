@@ -1,14 +1,12 @@
 #pragma once
 
-#include <iostream>
 #include <string>
-
 #include "Brain.hpp"
 
 class Animal {
 protected:
-    std::string _type;
-    Brain* _brain;
+    std::string type;
+    Brain* brain;
 public:
     Animal();
     virtual ~Animal();
