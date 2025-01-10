@@ -3,6 +3,7 @@
 #include "Dog.hpp"
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
+#include <iostream>
 
 int main() {
     const Animal* meta = new Animal();
