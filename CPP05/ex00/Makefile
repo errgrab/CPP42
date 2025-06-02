@@ -1,5 +1,6 @@
 CPP		= c++
-SRCS	= $(wildcard *.cpp)
+SRCS	= Bureaucrat.cpp \
+		main.cpp
 ODIR	= objs
 OBJS	= $(SRCS:%.cpp=$(ODIR)/%.o)
 CFLAGS	= -Wall -Wextra -Werror -std=c++98

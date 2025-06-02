@@ -1,10 +1,10 @@
 CPP		= c++
-SRCS	= main.cpp \
-		Bureaucrat.cpp \
+SRCS	= Bureaucrat.cpp \
 		AForm.cpp \
 		ShrubberyCreationForm.cpp \
 		RobotomyRequestForm.cpp \
-		PresidentialPardonForm.cpp
+		PresidentialPardonForm.cpp \
+		main.cpp
 ODIR	= objs
 OBJS	= $(SRCS:%.cpp=$(ODIR)/%.o)
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
