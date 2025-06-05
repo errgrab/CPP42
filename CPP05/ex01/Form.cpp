@@ -7,10 +7,10 @@ Form::Form()
 
 Form::Form(const std::string& name, int signGrade, int execGrade)
 	: name(name), isSigned(false), signGrade(signGrade), execGrade(execGrade) {
-    if (signGrade < 1 || execGrade < 1)
-        throw GradeTooHighException();
-    if (signGrade > 150 || execGrade > 150)
-        throw GradeTooLowException();
+	if (signGrade < 1 || execGrade < 1)
+		throw GradeTooHighException();
+	if (signGrade > 150 || execGrade > 150)
+		throw GradeTooLowException();
 }
 
 Form::Form(const Form& other)
@@ -19,13 +19,10 @@ Form::Form(const Form& other)
 Form::~Form() {}
 
 Form& Form::operator=(const Form& other) {
-    if (this != &other) {
-        name = other.name;
-        isSigned = other.isSigned;
-        signGrade = other.signGrade;
-        execGrade = other.execGrade;
-    }
-    return *this;
+	if (this != &other) {
+		isSigned = other.isSigned;
+	}
+	return *this;
 }
 
 const std::string& Form::getName() const { return name; }
@@ -37,23 +34,23 @@ int Form::getSignGrade() const { return signGrade; }
 int Form::getExecGrade() const { return execGrade; }
 
 void Form::beSigned(const Bureaucrat& bureaucrat) {
-    if (bureaucrat.getGrade() > signGrade)
-        throw GradeTooLowException();
-    isSigned = true;
+	if (bureaucrat.getGrade() > signGrade)
+		throw GradeTooLowException();
+	isSigned = true;
 }
 
 const char* Form::GradeTooHighException::what() const throw() {
-    return "Form grade is too high";
+	return "Form grade is too high";
 }
 
 const char* Form::GradeTooLowException::what() const throw() {
-    return "Form grade is too low";
+	return "Form grade is too low";
 }
 
 std::ostream& operator<<(std::ostream& os, const Form& form) {
-    os << "Form: " << form.getName()
-        << ", Status: " << (form.getIsSigned() ? "Signed" : "Unsigned")
-        << ", Required Grade to Sign: " << form.getSignGrade()
-        << ", Required Grade to Execute: " << form.getExecGrade();
-    return os;
+	os << "Form: " << form.getName()
+		<< ", Status: " << (form.getIsSigned() ? "Signed" : "Unsigned")
+		<< ", Required Grade to Sign: " << form.getSignGrade()
+		<< ", Required Grade to Execute: " << form.getExecGrade();
+	return os;
 }
