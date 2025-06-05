@@ -11,14 +11,14 @@ void testForm() {
 		std::cout << "Err: " << e.what() << std::endl;
 	}
 
-	std::cout << "Test: form creation with grade too low." << std::endl;
+	std::cout << "\nTest: form creation with grade too low." << std::endl;
 	try {
 		Form invalidForm("InvalidForm", 151, 50);
 	} catch (std::exception &e) {
 		std::cout << "Err: " << e.what() << std::endl;
 	}
 
-	std::cout << "Test: form creation with valid grades." << std::endl;
+	std::cout << "\nTest: form creation with valid grades." << std::endl;
 	try {
 		Form validForm("ValidForm", 50, 100);
 		std::cout << validForm << std::endl;
@@ -26,7 +26,7 @@ void testForm() {
 		std::cout << "Err: " << e.what() << std::endl;
 	}
 
-		std::cout << "Test: signing with Bureaucrat grade higher (worse) than required." << std::endl;
+	std::cout << "\nTest: signing with Bureaucrat grade higher (worse) than required." << std::endl;
 	try {
 		Bureaucrat b1("@.@", 76);
 		Form f1("Form1", 75, 100);
@@ -38,7 +38,7 @@ void testForm() {
 		std::cout << "Err: " << e.what() << std::endl;
 	}
 
-	std::cout << "Test: signing with Bureaucrat grade equal to required." << std::endl;
+	std::cout << "\nTest: signing with Bureaucrat grade equal to required." << std::endl;
 	try {
 		Bureaucrat b2(">.>", 100);
 		Form f2("Form2", 100, 50);
@@ -50,7 +50,7 @@ void testForm() {
 		std::cout << "Err: " << e.what() << std::endl;
 	}
 
-	std::cout << "Test: signing with Bureaucrat grade lower (better) than required." << std::endl;
+	std::cout << "\nTest: signing with Bureaucrat grade lower (better) than required." << std::endl;
 	try {
 		Bureaucrat b3("e.e", 25);
 		Form f3("Form3", 30, 30);
