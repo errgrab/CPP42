@@ -2,6 +2,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 #include <iostream>
 
 void testShrubberyCreationForm() {
@@ -82,9 +83,47 @@ void testPresidentialPardonForm() {
 	}
 }
 
+void testIntern() {
+	std::cout << "\nTesting Intern" << std::endl;
+	
+	Intern someRandomIntern;
+	Bureaucrat boss("Boss", 1);
+	AForm* rrf;
+	
+	try {
+		// Test creating a valid form
+		rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+		std::cout << *rrf << std::endl;
+		boss.signForm(*rrf);
+		boss.executeForm(*rrf);
+		delete rrf;
+		
+		// Test creating another valid form
+		AForm* scf = someRandomIntern.makeForm("shrubbery creation", "Home");
+		std::cout << *scf << std::endl;
+		boss.signForm(*scf);
+		boss.executeForm(*scf);
+		delete scf;
+		
+		// Test creating another valid form
+		AForm* ppf = someRandomIntern.makeForm("presidential pardon", "Criminal");
+		std::cout << *ppf << std::endl;
+		boss.signForm(*ppf);
+		boss.executeForm(*ppf);
+		delete ppf;
+		
+		// Test creating an invalid form
+		AForm* invalidForm = someRandomIntern.makeForm("invalid form", "Target");
+		delete invalidForm; // This should not be executed
+	} catch (std::exception &e) {
+		std::cout << "Exception: " << e.what() << std::endl;
+	}
+}
+
 int main() {
 	testShrubberyCreationForm();
 	testRobotomyRequestForm();
 	testPresidentialPardonForm();
+	testIntern();
 	return 0;
 }
