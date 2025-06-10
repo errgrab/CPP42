@@ -1,11 +1,49 @@
-#include "./Bureaucrat.hpp"
+#include "Bureaucrat.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 #include <exception>
 #include <iostream>
 
-void test_() {
+void testShrubberyCreationForm() {
+	ShrubberyCreationForm form("Home");
+	Bureaucrat bureaucrat("Alice", 145);
+	
+	try {
+		bureaucrat.signForm(form);
+		bureaucrat.executeForm(form);
+	} catch (const std::exception &e) {
+		std::cerr << e.what() << std::endl;
+	}
+}
+
+void testRobotomyRequestForm() {
+	RobotomyRequestForm form("Robot");
+	Bureaucrat bureaucrat("Bob", 72);
+	
+	try {
+		bureaucrat.signForm(form);
+		bureaucrat.executeForm(form);
+	} catch (const std::exception &e) {
+		std::cerr << e.what() << std::endl;
+	}
+}
+
+void testPresidentialPardonForm() {
+	PresidentialPardonForm form("Target");
+	Bureaucrat bureaucrat("Charlie", 25);
+	
+	try {
+		bureaucrat.signForm(form);
+		bureaucrat.executeForm(form);
+	} catch (const std::exception &e) {
+		std::cerr << e.what() << std::endl;
+	}
 }
 
 int main(void) {
-//	test<test>();
+	testShrubberyCreationForm();
+	testRobotomyRequestForm();
+	testPresidentialPardonForm();
 	return (0);
 }

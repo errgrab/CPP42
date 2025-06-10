@@ -54,3 +54,7 @@ std::ostream& operator<<(std::ostream& os, const AForm& form) {
 		<< ", Required Grade to Execute: " << form.getExecGrade() << ".";
 	return os;
 }
+
+const char *AForm::FormNotSignedException::what() const throw() {
+	return "Form is not signed.";
+}

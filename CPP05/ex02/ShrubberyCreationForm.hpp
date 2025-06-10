@@ -20,3 +20,5 @@ public:
 
     virtual void execute(const Bureaucrat& bureaucrat) const;
 };
+
+std::ostream& operator<<(std::ostream& os, const ShrubberyCreationForm& form);
