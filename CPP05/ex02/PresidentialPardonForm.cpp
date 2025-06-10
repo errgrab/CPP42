@@ -26,20 +26,25 @@ const std::string& PresidentialPardonForm::getTarget() const {
 }
 
 void PresidentialPardonForm::execute(const Bureaucrat& executor) const {
-	if (!this->getIsSigned())
-		throw AForm::FormNotSignedException();
+	try {
+		if (!this->getIsSigned())
+			throw AForm::FormNotSignedException();
 
-	if (executor.getGrade() > this->getExecGrade())
-		throw AForm::GradeTooLowException();
+		if (executor.getGrade() > this->getExecGrade())
+			throw AForm::GradeTooLowException();
 
-	std::cout << this->target << " has been pardoned by Zaphod Beeblebrox." << std::endl;
+		std::cout << this->target << " has been pardoned by Zaphod Beeblebrox." << std::endl;
+	} catch (const std::exception &e) {
+		std::cerr << executor.getName() << " could not execute form "
+			<< this->getName() << " because " << e.what() << std::endl;
+	}
 }
 
 std::ostream& operator<<(std::ostream& os, const PresidentialPardonForm& form) {
 	os << "PresidentialPardonForm: " << form.getName() 
-	   << ", Target: " << form.getTarget() 
-	   << ", Signed: " << (form.getIsSigned() ? "Yes" : "No") 
-	   << ", Sign Grade: " << form.getSignGrade() 
-	   << ", Exec Grade: " << form.getExecGrade();
+		<< ", Target: " << form.getTarget() 
+		<< ", Signed: " << (form.getIsSigned() ? "Yes" : "No") 
+		<< ", Sign Grade: " << form.getSignGrade() 
+		<< ", Exec Grade: " << form.getExecGrade();
 	return os;
 }

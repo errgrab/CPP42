@@ -1,6 +1,9 @@
 CPP		= c++
 SRCS	= Bureaucrat.cpp \
 		AForm.cpp \
+		PresidentialPardonForm.cpp \
+		RobotomyRequestForm.cpp \
+		ShrubberyCreationForm.cpp \
 		main.cpp
 ODIR	= objs
 OBJS	= $(SRCS:%.cpp=$(ODIR)/%.o)
@@ -18,6 +21,7 @@ $(ODIR)/%.o: %.cpp
 
 clean:
 	$(RM)r $(ODIR)
+	$(RM) *_shrubbery
 
 fclean: clean
 	$(RM) $(NAME)

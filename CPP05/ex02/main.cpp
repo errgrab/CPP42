@@ -7,7 +7,7 @@
 
 void testShrubberyCreationForm() {
 	ShrubberyCreationForm form("Home");
-	Bureaucrat bureaucrat("Alice", 145);
+	Bureaucrat bureaucrat("Alice", 137);
 	
 	try {
 		bureaucrat.signForm(form);
@@ -19,7 +19,7 @@ void testShrubberyCreationForm() {
 
 void testRobotomyRequestForm() {
 	RobotomyRequestForm form("Robot");
-	Bureaucrat bureaucrat("Bob", 72);
+	Bureaucrat bureaucrat("Bob", 45);
 	
 	try {
 		bureaucrat.signForm(form);
@@ -31,7 +31,7 @@ void testRobotomyRequestForm() {
 
 void testPresidentialPardonForm() {
 	PresidentialPardonForm form("Target");
-	Bureaucrat bureaucrat("Charlie", 25);
+	Bureaucrat bureaucrat("Charlie", 5);
 	
 	try {
 		bureaucrat.signForm(form);

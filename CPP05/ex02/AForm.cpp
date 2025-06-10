@@ -40,11 +40,11 @@ void AForm::beSigned(const Bureaucrat& bureaucrat) {
 }
 
 const char* AForm::GradeTooHighException::what() const throw() {
-	return "Form grade is too high";
+	return "form grade is too high";
 }
 
 const char* AForm::GradeTooLowException::what() const throw() {
-	return "Form grade is too low";
+	return "form grade is too low";
 }
 
 std::ostream& operator<<(std::ostream& os, const AForm& form) {
@@ -56,5 +56,5 @@ std::ostream& operator<<(std::ostream& os, const AForm& form) {
 }
 
 const char *AForm::FormNotSignedException::what() const throw() {
-	return "Form is not signed.";
+	return "form is not signed.";
 }
