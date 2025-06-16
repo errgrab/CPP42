@@ -47,7 +47,7 @@ public:
 		try {
 			char* endPtr;
 			double d = strtod(value.c_str(), &endPtr);
-			if (endPtr != value.c_str() + value.size() || std::isnan(d) || std::isinf(d) ||
+			if (endPtr != value.c_str() + value.size() || isnan(d) || isinf(d) ||
 				d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
 				throw std::exception();
 			}
