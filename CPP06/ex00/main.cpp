@@ -3,13 +3,14 @@
 #include <string>
 #include <limits>
 #include <cctype>
+#include <cstdlib>  // for strtod
 
 class Converter {
 private:
 	Converter() {}
-	Converter(const Converter &other) {}
+	Converter(const Converter&) {(void)this;}
 	~Converter() {}
-	Converter &operator=(const Converter &other) { return *this; }
+	Converter &operator=(const Converter&) {(void)this; return *this;}
 
 public:
 	static void show(const std::string &value) {
@@ -24,7 +25,8 @@ public:
 		}
 
 		try {
-			int intValue = std::stoi(value);
+			double d = strtod(value.c_str(), NULL);
+			int intValue = static_cast<int>(d);
 			if (intValue < std::numeric_limits<char>::min() || intValue > std::numeric_limits<char>::max()) {
 				std::cout << "char: impossible" << std::endl;
 			} else {
@@ -47,14 +49,14 @@ public:
 		}
 
 		try {
-			float floatValue = std::stof(value);
+			float floatValue = static_cast<float>(strtod(value.c_str(), NULL));
 			std::cout << "float: " << floatValue << "f" << std::endl;
 		} catch (const std::exception &e) {
 			std::cout << "float: impossible" << std::endl;
 		}
 
 		try {
-			double doubleValue = std::stod(value);
+			double doubleValue = strtod(value.c_str(), NULL);
 			std::cout << "double: " << doubleValue << std::endl;
 		} catch (const std::exception &e) {
 			std::cout << "double: impossible" << std::endl;
