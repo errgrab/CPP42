@@ -42,9 +42,14 @@ public:
 		}
 
 		try {
-			int intValue = std::stoi(value);
+			char* endPtr;
+			double d = strtod(value.c_str(), &endPtr);
+			if (endPtr == value.c_str() || *endPtr != '\0' || d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
+				throw std::exception();
+			}
+			int intValue = static_cast<int>(d);
 			std::cout << "int: " << intValue << std::endl;
-		} catch (const std::exception &e) {
+		} catch (...) {
 			std::cout << "int: impossible" << std::endl;
 		}
 
