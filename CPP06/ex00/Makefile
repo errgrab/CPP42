@@ -3,12 +3,13 @@ SRCS	= main.cpp
 ODIR	= objs/
 OBJS	= $(SRCS:%.cpp=$(ODIR)%.o)
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
-NAME	= convert
+NAME	= converter
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CPP) $(CFLAGS) -o $@ $^
+	@echo "Successfully built $(NAME)"
 
 $(ODIR)%.o: %.cpp
 	@mkdir -p $(@D)
