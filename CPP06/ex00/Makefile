@@ -9,7 +9,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CPP) $(CFLAGS) -o $@ $^
-	@echo "Successfully built $(NAME)"
 
 $(ODIR)%.o: %.cpp
 	@mkdir -p $(@D)
