@@ -39,7 +39,6 @@ public:
 				std::cout << "char: Non displayable" << std::endl;
 			}
 		}
-		/*
 		try {
 			char charValue = static_cast<char>(std::stoi(value));
 			if (std::isprint(charValue)) {
@@ -70,7 +69,7 @@ public:
 			std::cout << "double: " << doubleValue << std::endl;
 		} catch (const std::exception &e) {
 			std::cout << "double: impossible" << std::endl;
-		}*/
+		}
 	}
 };
 
