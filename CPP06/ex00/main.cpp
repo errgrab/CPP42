@@ -13,6 +13,16 @@ private:
 
 public:
 	static void show(const std::string &value) {
+		// Handle single non-digit character case first
+		if (value.size() == 1 && !std::isdigit(static_cast<unsigned char>(value[0]))) {
+			char c = value[0];
+			std::cout << "char: '" << c << "'" << std::endl;
+			std::cout << "int: " << static_cast<int>(c) << std::endl;
+			std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
+			std::cout << "double: " << static_cast<double>(c) << std::endl;
+			return;
+		}
+
 		// CHAR
 		
 		std::istringstream iss(value);
