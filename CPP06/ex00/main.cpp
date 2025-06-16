@@ -25,17 +25,16 @@ public:
 		}
 
 		try {
-			double d = strtod(value.c_str(), NULL);
-			int intValue = static_cast<int>(d);
-			if (intValue < std::numeric_limits<char>::min() || intValue > std::numeric_limits<char>::max()) {
+			char* endPtr;
+			double d = strtod(value.c_str(), &endPtr);
+			if (endPtr != value.c_str() + value.size() || std::isnan(d) || std::isinf(d)) {
+				throw std::exception();
+			}
+			if (d < std::numeric_limits<char>::min() || d > std::numeric_limits<char>::max()) {
 				std::cout << "char: impossible" << std::endl;
 			} else {
-				char c = static_cast<char>(intValue);
-				if (std::isprint(c)) {
-					std::cout << "char: '" << c << "'" << std::endl;
-				} else {
-					std::cout << "char: Non displayable" << std::endl;
-				}
+				char c = static_cast<char>(d);
+				std::cout << "char: " << (std::isprint(c) ? "'" + std::string(1, c) + "'" : "Non displayable") << std::endl;
 			}
 		} catch (...) {
 			std::cout << "char: impossible" << std::endl;
@@ -44,26 +43,45 @@ public:
 		try {
 			char* endPtr;
 			double d = strtod(value.c_str(), &endPtr);
-			if (endPtr == value.c_str() || *endPtr != '\0' || d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
+			if (endPtr != value.c_str() + value.size() || std::isnan(d) || std::isinf(d) ||
+				d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
 				throw std::exception();
 			}
-			int intValue = static_cast<int>(d);
-			std::cout << "int: " << intValue << std::endl;
+			std::cout << "int: " << static_cast<int>(d) << std::endl;
 		} catch (...) {
 			std::cout << "int: impossible" << std::endl;
 		}
 
 		try {
-			float floatValue = static_cast<float>(strtod(value.c_str(), NULL));
-			std::cout << "float: " << floatValue << "f" << std::endl;
-		} catch (const std::exception &e) {
+			char* endPtr;
+			double d = strtod(value.c_str(), &endPtr);
+			if (endPtr != value.c_str() + value.size() && !(value.size() > 0 && value[value.size()-1] == 'f' && endPtr == value.c_str() + value.size() - 1)) {
+				throw std::exception();
+			}
+			float f = static_cast<float>(d);
+			std::cout << "float: " << f;
+			if (std::isnan(f) || std::isinf(f) || f == std::floor(f)) {
+				std::cout << ".0f" << std::endl;
+			} else {
+				std::cout << "f" << std::endl;
+			}
+		} catch (...) {
 			std::cout << "float: impossible" << std::endl;
 		}
 
 		try {
-			double doubleValue = strtod(value.c_str(), NULL);
-			std::cout << "double: " << doubleValue << std::endl;
-		} catch (const std::exception &e) {
+			char* endPtr;
+			double d = strtod(value.c_str(), &endPtr);
+			if (endPtr != value.c_str() + value.size() && !(value.size() > 0 && value[value.size()-1] == 'f' && endPtr == value.c_str() + value.size() - 1)) {
+				throw std::exception();
+			}
+			std::cout << "double: " << d;
+			if (std::isnan(d) || std::isinf(d) || d == std::floor(d)) {
+				std::cout << ".0" << std::endl;
+			} else {
+				std::cout << std::endl;
+			}
+		} catch (...) {
 			std::cout << "double: impossible" << std::endl;
 		}
 	}
