@@ -27,7 +27,10 @@ public:
 		try {
 			char* endPtr;
 			double d = strtod(value.c_str(), &endPtr);
-			if (endPtr != value.c_str() + value.size() || std::isnan(d) || std::isinf(d)) {
+			// Check for valid conversion and special values
+			if (endPtr == value.c_str() ||  // conversion failed
+				(*endPtr != '\0' && !(value.size() > 0 && value[value.size()-1] == 'f' && endPtr == value.c_str() + value.size() - 1)) || 
+				std::isnan(d)) {
 				throw std::exception();
 			}
 			if (d < std::numeric_limits<char>::min() || d > std::numeric_limits<char>::max()) {
@@ -59,11 +62,14 @@ public:
 				throw std::exception();
 			}
 			float f = static_cast<float>(d);
-			std::cout << "float: " << f;
-			if (std::isnan(f) || std::isinf(f) || f == std::floor(f)) {
-				std::cout << ".0f" << std::endl;
+			if (std::isnan(f)) {
+				std::cout << "float: nanf" << std::endl;
+			} else if (std::isinf(f)) {
+				std::cout << "float: " << (f < 0 ? "-inff" : "inff") << std::endl;
+			} else if (f == std::floor(f)) {
+				std::cout << "float: " << f << ".0f" << std::endl;
 			} else {
-				std::cout << "f" << std::endl;
+				std::cout << "float: " << f << "f" << std::endl;
 			}
 		} catch (...) {
 			std::cout << "float: impossible" << std::endl;
@@ -75,11 +81,14 @@ public:
 			if (endPtr != value.c_str() + value.size() && !(value.size() > 0 && value[value.size()-1] == 'f' && endPtr == value.c_str() + value.size() - 1)) {
 				throw std::exception();
 			}
-			std::cout << "double: " << d;
-			if (std::isnan(d) || std::isinf(d) || d == std::floor(d)) {
-				std::cout << ".0" << std::endl;
+			if (std::isnan(d)) {
+				std::cout << "double: nan" << std::endl;
+			} else if (std::isinf(d)) {
+				std::cout << "double: " << (d < 0 ? "-inf" : "inf") << std::endl;
+			} else if (d == std::floor(d)) {
+				std::cout << "double: " << d << ".0" << std::endl;
 			} else {
-				std::cout << std::endl;
+				std::cout << "double: " << d << std::endl;
 			}
 		} catch (...) {
 			std::cout << "double: impossible" << std::endl;
