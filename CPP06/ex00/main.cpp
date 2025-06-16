@@ -6,10 +6,10 @@
 
 class Converter {
 private:
-	Converter();
-	Converter(const Converter &other);
-	~Converter();
-	Converter &operator=(const Converter &other);
+	Converter() {}
+	Converter(const Converter &other) {}
+	~Converter() {}
+	Converter &operator=(const Converter &other) { return *this; }
 
 public:
 	static void show(const std::string &value) {
@@ -23,30 +23,19 @@ public:
 			return;
 		}
 
-		// CHAR
-		
-		std::istringstream iss(value);
-		long tmp;
-		if (!(iss >> tmp) || !iss.eof() ||
-				tmp < std::numeric_limits<char>::min() ||
-				tmp > std::numeric_limits<char>::max()) {
-			std::cout << "char: impossible" << std::endl;
-		} else {
-			char charValue = static_cast<char>(tmp);
-			if (std::isprint(charValue)) {
-				std::cout << "char: '" << charValue << "'" << std::endl;
-			} else {
-				std::cout << "char: Non displayable" << std::endl;
-			}
-		}
 		try {
-			char charValue = static_cast<char>(std::stoi(value));
-			if (std::isprint(charValue)) {
-				std::cout << "char: '" << charValue << "'" << std::endl;
+			int intValue = std::stoi(value);
+			if (intValue < std::numeric_limits<char>::min() || intValue > std::numeric_limits<char>::max()) {
+				std::cout << "char: impossible" << std::endl;
 			} else {
-				std::cout << "char: Non displayable" << std::endl;
+				char c = static_cast<char>(intValue);
+				if (std::isprint(c)) {
+					std::cout << "char: '" << c << "'" << std::endl;
+				} else {
+					std::cout << "char: Non displayable" << std::endl;
+				}
 			}
-		} catch (const std::exception &e) {
+		} catch (...) {
 			std::cout << "char: impossible" << std::endl;
 		}
 
