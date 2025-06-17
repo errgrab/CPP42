@@ -12,6 +12,8 @@ private:
 	Converter(const Converter&) {(void)this;}
 	~Converter() {}
 	Converter &operator=(const Converter&) {(void)this; return *this;}
+	void ()
+
 
 public:
 	static void show(const std::string &value) {
@@ -28,7 +30,6 @@ public:
 		try {
 			char* endPtr;
 			double d = strtod(value.c_str(), &endPtr);
-			// Check for valid conversion and special values
 			if (endPtr == value.c_str() ||  // conversion failed
 				(*endPtr != '\0' && !(value.size() > 0 && value[value.size()-1] == 'f' && endPtr == value.c_str() + value.size() - 1)) || 
 				isnan(d)) {
