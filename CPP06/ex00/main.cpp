@@ -1,10 +1,10 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <limits>
 #include <cctype>
-#include <cstdlib>  // for strtod
-#include <cmath>    // for isnan, isinf, floor
+#include <limits>
+#include <cstdlib>
+#include <cmath>
 
 class Converter {
 private:
@@ -12,29 +12,45 @@ private:
 	Converter(const Converter&) {(void)this;}
 	~Converter() {}
 	Converter &operator=(const Converter&) {(void)this; return *this;}
-	void ()
 
+	static int toInt(const std::string &value) {
+		double d = toDouble(value);
 
-public:
-	static void show(const std::string &value) {
-		// Handle single non-digit character case first
-		if (value.size() == 1 && !std::isdigit(static_cast<unsigned char>(value[0]))) {
-			char c = value[0];
-			std::cout << "char: '" << c << "'" << std::endl;
-			std::cout << "int: " << static_cast<int>(c) << std::endl;
-			std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
-			std::cout << "double: " << static_cast<double>(c) << std::endl;
-			return;
-		}
+		bool inRange = (d >= std::numeric_limits<int>::min()
+					 && d <= std::numeric_limits<int>::max());
 
+		if (isnan(d) || isinf(d) || !inRange)
+			throw std::exception();
+
+		return static_cast<int>(d);
+	}
+
+	static double toDouble(const std::string &value) {
+		if (value.size() == 0)
+			throw std::exception();
+
+		char* endPtr;
+		double d = strtod(value.c_str(), &endPtr);
+
+		const char* str = value.c_str();
+		size_t len = value.size();
+
+		bool fullyParsed = (endPtr == str + len);
+		bool endsWithF = (len > 0 && value[len - 1] == 'f');
+		bool parsedExceptLastF = (endsWithF && endPtr == str + len - 1);
+
+		if (len == 1 && !(str[0] >= '0' && str[0] <= '9'))
+			return static_cast<double>(str[0]);
+
+		if (!fullyParsed && !parsedExceptLastF)
+			throw std::exception();
+
+		return d;
+	}
+
+	static void showChar(const std::string &value) {
 		try {
-			char* endPtr;
-			double d = strtod(value.c_str(), &endPtr);
-			if (endPtr == value.c_str() ||  // conversion failed
-				(*endPtr != '\0' && !(value.size() > 0 && value[value.size()-1] == 'f' && endPtr == value.c_str() + value.size() - 1)) || 
-				isnan(d)) {
-				throw std::exception();
-			}
+			double d = toDouble(value);
 			if (d < std::numeric_limits<char>::min() || d > std::numeric_limits<char>::max()) {
 				std::cout << "char: impossible" << std::endl;
 			} else {
@@ -44,26 +60,20 @@ public:
 		} catch (...) {
 			std::cout << "char: impossible" << std::endl;
 		}
+	}
 
+	static void showInt(const std::string &value) {
 		try {
-			char* endPtr;
-			double d = strtod(value.c_str(), &endPtr);
-			if (endPtr != value.c_str() + value.size() || isnan(d) || isinf(d) ||
-				d < std::numeric_limits<int>::min() || d > std::numeric_limits<int>::max()) {
-				throw std::exception();
-			}
-			std::cout << "int: " << static_cast<int>(d) << std::endl;
+			int i = toInt(value);
+			std::cout << "int: " << i << std::endl;
 		} catch (...) {
 			std::cout << "int: impossible" << std::endl;
 		}
+	}
 
+	static void showFloat(const std::string &value) {
 		try {
-			char* endPtr;
-			double d = strtod(value.c_str(), &endPtr);
-			if (endPtr != value.c_str() + value.size() && !(value.size() > 0 && value[value.size()-1] == 'f' && endPtr == value.c_str() + value.size() - 1)) {
-				throw std::exception();
-			}
-			float f = static_cast<float>(d);
+			float f = static_cast<float>(toDouble(value));
 			if (isnan(f)) {
 				std::cout << "float: nanf" << std::endl;
 			} else if (isinf(f)) {
@@ -76,13 +86,11 @@ public:
 		} catch (...) {
 			std::cout << "float: impossible" << std::endl;
 		}
+	}
 
+	static void showDouble(const std::string &value) {
 		try {
-			char* endPtr;
-			double d = strtod(value.c_str(), &endPtr);
-			if (endPtr != value.c_str() + value.size() && !(value.size() > 0 && value[value.size()-1] == 'f' && endPtr == value.c_str() + value.size() - 1)) {
-				throw std::exception();
-			}
+			double d = toDouble(value);
 			if (isnan(d)) {
 				std::cout << "double: nan" << std::endl;
 			} else if (isinf(d)) {
@@ -96,9 +104,17 @@ public:
 			std::cout << "double: impossible" << std::endl;
 		}
 	}
+
+public:
+	static void show(const std::string &value) {
+		showChar(value);
+		showInt(value);
+		showFloat(value);
+		showDouble(value);
+	}
 };
 
-int main(int ac, char **av) {
+int main(int ac, char** av) {
 	if (ac != 2) {
 		std::cerr << "Usage: " << av[0] << " <value>" << std::endl;
 		return 1;
