@@ -1,5 +1,5 @@
 CPP		= c++
-SRCS	= main.cpp whatever.cpp
+SRCS	= main.cpp
 ODIR	= objs/
 OBJS	= $(SRCS:%.cpp=$(ODIR)%.o)
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
