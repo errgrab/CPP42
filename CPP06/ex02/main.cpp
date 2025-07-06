@@ -2,7 +2,10 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "Classes.hpp"
+#include "Base.hpp"
+#include "A.hpp"
+#include "B.hpp"
+#include "C.hpp"
 
 Base *generate(void) {
 	std::srand(std::time(0));
