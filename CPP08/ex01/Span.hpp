@@ -1,9 +1,11 @@
 #pragma once
 
-template <typename T>
+#include <vector>
+
 class Span {
 private:
 	unsigned int N;
+	std::vector<int> array;
 
 public:
 	Span();
@@ -12,4 +14,8 @@ public:
 	~Span();
 	Span &operator=(const Span &other);
 
+	void addNumber(unsigned int);
+
+	unsigned int shortestSpan();
+	unsigned int longestSpan();
 };
