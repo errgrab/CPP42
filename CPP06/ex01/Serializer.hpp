@@ -6,10 +6,10 @@ struct Data;
 
 class Serializer {
 private:
-	Serializer() {};
-	Serializer(Serializer &) {};
-	~Serializer() {};
-	Serializer &operator=(Serializer &) {return *this;};
+	Serializer();
+	Serializer(Serializer &);
+	~Serializer();
+	Serializer &operator=(Serializer &);
 
 public:
 	static uintptr_t serialize(Data *ptr);
