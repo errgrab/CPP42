@@ -1,5 +1,5 @@
 CPP		= c++
-SRCS	= main.cpp Converter.cpp
+SRCS	= main.cpp ScalarConverter.cpp
 ODIR	= objs/
 OBJS	= $(SRCS:%.cpp=$(ODIR)%.o)
 CFLAGS	= -Wall -Wextra -Werror -std=c++98

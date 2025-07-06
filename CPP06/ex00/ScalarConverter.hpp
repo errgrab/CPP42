@@ -2,13 +2,13 @@
 
 #include <string>
 
-class Converter {
+class ScalarConverter {
 
 private:
-	Converter() {}
-	Converter(const Converter&) {}
-	~Converter() {}
-	Converter &operator=(const Converter&) {return *this;}
+	ScalarConverter();
+	ScalarConverter(const ScalarConverter&);
+	~ScalarConverter();
+	ScalarConverter &operator=(const ScalarConverter&);
 
 	static int toInt(const std::string &value);
 	static double toDouble(const std::string &value);
@@ -19,6 +19,6 @@ private:
 	static void showDouble(const std::string &value);
 
 public:
-	static void show(const std::string &value);
+	static void convert(const std::string &value);
 
 };

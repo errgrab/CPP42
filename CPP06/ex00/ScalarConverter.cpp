@@ -1,4 +1,4 @@
-#include "Converter.hpp"
+#include "ScalarConverter.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -8,19 +8,12 @@
 #include <cstdlib>
 #include <cmath>
 
-/*
-int Converter::toInt(const std::string &value);
-double Converter::toDouble(const std::string &value);
+ScalarConverter::ScalarConverter() {}
+ScalarConverter::ScalarConverter(const ScalarConverter&) {}
+ScalarConverter::~ScalarConverter() {}
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter&) {return *this;}
 
-void Converter::showChar(const std::string &value);
-void Converter::showInt(const std::string &value);
-void Converter::showFloat(const std::string &value);
-void Converter::showDouble(const std::string &value);
-
-void Converter::show(const std::string &value);
-*/
-
-int Converter::toInt(const std::string &value) {
+int ScalarConverter::toInt(const std::string &value) {
 	double d = toDouble(value);
 	bool inRange = (d >= std::numeric_limits<int>::min()
 				 && d <= std::numeric_limits<int>::max());
@@ -29,7 +22,7 @@ int Converter::toInt(const std::string &value) {
 	return static_cast<int>(d);
 }
 
-double Converter::toDouble(const std::string &value) {
+double ScalarConverter::toDouble(const std::string &value) {
 	if (value.size() == 0)
 		throw std::exception();
 	char* endPtr;
@@ -46,7 +39,7 @@ double Converter::toDouble(const std::string &value) {
 	return d;
 }
 
-void Converter::showChar(const std::string &value) {
+void ScalarConverter::showChar(const std::string &value) {
 	try {
 		double d = toDouble(value);
 		if (d < std::numeric_limits<char>::min()
@@ -63,7 +56,7 @@ void Converter::showChar(const std::string &value) {
 	}
 }
 
-void Converter::showInt(const std::string &value) {
+void ScalarConverter::showInt(const std::string &value) {
 	try {
 		int i = toInt(value);
 		std::cout << "int: " << i << std::endl;
@@ -72,7 +65,7 @@ void Converter::showInt(const std::string &value) {
 	}
 }
 
-void Converter::showFloat(const std::string &value) {
+void ScalarConverter::showFloat(const std::string &value) {
 	try {
 		float f = static_cast<float>(toDouble(value));
 		if (isnan(f)) {
@@ -89,7 +82,7 @@ void Converter::showFloat(const std::string &value) {
 	}
 }
 
-void Converter::showDouble(const std::string &value) {
+void ScalarConverter::showDouble(const std::string &value) {
 	try {
 		double d = toDouble(value);
 		if (isnan(d)) {
@@ -106,7 +99,7 @@ void Converter::showDouble(const std::string &value) {
 	}
 }
 
-void Converter::show(const std::string &value) {
+void ScalarConverter::convert(const std::string &value) {
 	showChar(value);
 	showInt(value);
 	showFloat(value);
