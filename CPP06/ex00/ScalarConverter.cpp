@@ -8,12 +8,20 @@
 #include <cstdlib>
 #include <cmath>
 
+static int toInt(const std::string &value);
+static double toDouble(const std::string &value);
+
+static void showChar(const std::string &value);
+static void showInt(const std::string &value);
+static void showFloat(const std::string &value);
+static void showDouble(const std::string &value);
+
 ScalarConverter::ScalarConverter() {}
 ScalarConverter::ScalarConverter(const ScalarConverter&) {}
 ScalarConverter::~ScalarConverter() {}
 ScalarConverter &ScalarConverter::operator=(const ScalarConverter&) {return *this;}
 
-int ScalarConverter::toInt(const std::string &value) {
+int toInt(const std::string &value) {
 	double d = toDouble(value);
 	bool inRange = (d >= std::numeric_limits<int>::min()
 				 && d <= std::numeric_limits<int>::max());
@@ -22,7 +30,7 @@ int ScalarConverter::toInt(const std::string &value) {
 	return static_cast<int>(d);
 }
 
-double ScalarConverter::toDouble(const std::string &value) {
+double toDouble(const std::string &value) {
 	if (value.size() == 0)
 		throw std::exception();
 	char* endPtr;
@@ -39,7 +47,7 @@ double ScalarConverter::toDouble(const std::string &value) {
 	return d;
 }
 
-void ScalarConverter::showChar(const std::string &value) {
+void showChar(const std::string &value) {
 	try {
 		double d = toDouble(value);
 		if (d < std::numeric_limits<char>::min()
@@ -56,7 +64,7 @@ void ScalarConverter::showChar(const std::string &value) {
 	}
 }
 
-void ScalarConverter::showInt(const std::string &value) {
+void showInt(const std::string &value) {
 	try {
 		int i = toInt(value);
 		std::cout << "int: " << i << std::endl;
@@ -65,7 +73,7 @@ void ScalarConverter::showInt(const std::string &value) {
 	}
 }
 
-void ScalarConverter::showFloat(const std::string &value) {
+void showFloat(const std::string &value) {
 	try {
 		float f = static_cast<float>(toDouble(value));
 		if (isnan(f)) {
@@ -82,7 +90,7 @@ void ScalarConverter::showFloat(const std::string &value) {
 	}
 }
 
-void ScalarConverter::showDouble(const std::string &value) {
+void showDouble(const std::string &value) {
 	try {
 		double d = toDouble(value);
 		if (isnan(d)) {
