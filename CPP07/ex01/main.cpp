@@ -20,13 +20,13 @@ void testInt(void) {
 	size_t len = sizeof(arr) / sizeof(int);
 
 	std::cout << "Values: ";
-	iter(arr, len, printVal);
+	iter(arr, len, printVal<const int>);
 	std::cout << std::endl;
 
 	iter(arr, len, sumPrev);
 
 	std::cout << "Values: ";
-	iter(arr, len, printVal);
+	iter(arr, len, printVal<const int>);
 	std::cout << std::endl;
 }
 
@@ -42,13 +42,13 @@ void testString(void) {
 	size_t len = sizeof(arr) / sizeof(std::string);
 
 	std::cout << "Values: ";
-	iter(arr, len, printVal);
+	iter(arr, len, printVal<const std::string>);
 	std::cout << std::endl;
 
 	iter(arr, len, toUpper);
 
 	std::cout << "Values: ";
-	iter(arr, len, printVal);
+	iter(arr, len, printVal<const std::string>);
 	std::cout << std::endl;
 }
 
@@ -63,13 +63,13 @@ void testFloat() {
 	size_t len = sizeof(arr) / sizeof(float);
 
 	std::cout << "Values: ";
-	iter(arr, len, printVal);
+	iter(arr, len, printVal<const float>);
 	std::cout << std::endl;
 
 	iter(arr, len, toFloor);
 
 	std::cout << "Values: ";
-	iter(arr, len, printVal);
+	iter(arr, len, printVal<const float>);
 	std::cout << std::endl;
 }
 
