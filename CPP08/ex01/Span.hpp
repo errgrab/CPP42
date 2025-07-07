@@ -14,8 +14,18 @@ public:
 	~Span();
 	Span &operator=(const Span &other);
 
-	void addNumber(unsigned int);
+	void addNumber(unsigned int n);
 
 	unsigned int shortestSpan();
 	unsigned int longestSpan();
+
+	class FullException : public std::exception {
+	public:
+		virtual const char *what() const throw();
+	};
+
+	class NoSpanCanBeFoundException : public std::exception {
+	public:
+		virtual const char *what() const throw();
+	};
 };
