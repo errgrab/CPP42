@@ -41,6 +41,10 @@ unsigned int Span::longestSpan() {
 	return max - min;
 }
 
+const char *Span::CannotAddException::what() const throw() {
+	return "range is bigger than the lenght of the array.";
+}
+
 const char *Span::FullException::what() const throw() {
 	return "the array is full.";
 }

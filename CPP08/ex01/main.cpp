@@ -20,22 +20,34 @@ int main(void) {
 	}
 	std::cout << std::endl;
 
-	std::cout << "Try shortestSpan() without adding numbers, "
+	std::cout << "Try the same thing without adding numbers, "
 		<< "should print error." << std::endl;
 	try {
 		sp = Span(5);
-		std::cout << sp.shortestSpan() << std::endl;
+		std::cout << sp.shortestSpan() << ", " << sp.longestSpan() << std::endl;
 	} catch (std::exception &e) {
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 	std::cout << std::endl;
 
-	std::cout << "Try shortestSpan() with only one number, "
+	std::cout << "Try the same thing with only one number, "
 		<< "should print error." << std::endl;
 	try {
 		sp = Span(5);
 		sp.addNumber(0);
-		std::cout << sp.shortestSpan() << std::endl;
+		std::cout << sp.shortestSpan() << ", " << sp.longestSpan() << std::endl;
+	} catch (std::exception &e) {
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+	std::cout << std::endl;
+
+	std::cout << "Using iterators to make the same test, "
+		<< "should print: 2, 14." << std::endl;
+	try {
+		sp = Span(5);
+		int subjectArray[5] = { 6, 3, 17, 9, 11 };
+		sp.addRange(&subjectArray[0], &subjectArray[5]);
+		std::cout << sp.shortestSpan() << ", " << sp.longestSpan() << std::endl;
 	} catch (std::exception &e) {
 		std::cout << "Error: " << e.what() << std::endl;
 	}
