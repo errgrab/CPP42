@@ -20,10 +20,4 @@ public:
 	typedef typename std::stack<T>::container_type::reverse_iterator reverse_iterator;
 	reverse_iterator rbegin() { return this->c.rbegin(); }
 	reverse_iterator rend() { return this->c.rend(); }
-
-	void push_back(const T &t) { this->push(t); }
-	void pop_back() { this->pop(); }
-
-	T &back() { return this->top(); }
-	const T &back() const { return this->top(); }
 };
