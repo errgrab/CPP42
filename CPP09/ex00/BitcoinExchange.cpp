@@ -129,9 +129,3 @@ void BitcoinExchange::processInput(const std::string &filename) const {
 		std::cout << date << " => " << value << " = " << (value * rate) << std::endl;
 	}
 }
-
-void BitcoinExchange::print() const { // DEBUG
-	for (std::map<std::string, double>::const_iterator it = _prices.begin(); it != _prices.end(); it++) {
-		std::cout << it->first << " | " << it->second << std::endl;
-	}
-}

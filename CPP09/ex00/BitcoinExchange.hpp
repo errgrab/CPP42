@@ -8,7 +8,6 @@ class BitcoinExchange
 private:
 	std::map<std::string, double> _prices;
 	bool isValidDate(const std::string &date) const;
-	bool isValidValue(double value);
 public:
 	BitcoinExchange();
 	BitcoinExchange(const std::map<std::string, double> prices);
@@ -18,7 +17,6 @@ public:
 
 	void loadDatabase(const std::string &filename);
 	double getRate(const std::string &date) const;
-	void print() const;
 	void processInput(const std::string &filename) const;
 
 };
