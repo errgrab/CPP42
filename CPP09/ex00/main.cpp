@@ -9,15 +9,10 @@ int main(int argc, char **argv) {
 
 	try {
 		btcExchange.loadDatabase("data.csv");
-	} catch (std::exception &e) {
-		std::cerr << e.what() << std::endl;
-	};
-
-	try {
 		btcExchange.processInput(input);
 	} catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;
-	}
+	};
 
 	return 0;
 }

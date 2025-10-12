@@ -4,7 +4,7 @@
 
 RPN::RPN() {}
 
-RPN::RPN(std::stack<int> stk) : _stack(stk) {}
+RPN::RPN(std::stack<float> stk) : _stack(stk) {}
 
 RPN::RPN(const RPN &other) : _stack(other._stack) {}
 
@@ -19,7 +19,7 @@ bool RPN::isOperator(const std::string &token) const {
 	return token == "+" || token == "-" || token == "*" || token == "/";
 }
 
-int RPN::applyOperation(const std::string &op, const int a, const int b) const {
+float RPN::applyOperation(const std::string &op, const float a, const float b) const {
 	if (op == "+") return a + b;
 	if (op == "-") return a - b;
 	if (op == "*") return a * b;
@@ -28,7 +28,7 @@ int RPN::applyOperation(const std::string &op, const int a, const int b) const {
 	throw std::runtime_error("Error");
 }
 
-int RPN::eval(const std::string &expr) {
+float RPN::eval(const std::string &expr) {
 	std::istringstream iss(expr);
 	std::string token;
 
@@ -36,8 +36,8 @@ int RPN::eval(const std::string &expr) {
 		if (isOperator(token)) {
 			if (_stack.size() < 2)
 				throw std::runtime_error("Error");
-			int b = _stack.top(); _stack.pop();
-			int a = _stack.top(); _stack.pop();
+			float b = _stack.top(); _stack.pop();
+			float a = _stack.top(); _stack.pop();
 			_stack.push(applyOperation(token, a, b));
 		} else {
 			if (token.size() != 1 || !isdigit(token[0]))

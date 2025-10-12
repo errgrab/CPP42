@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
 
 	try {
 		RPN rpn;
-		int result = rpn.eval(argv[1]);
+		float result = rpn.eval(argv[1]);
 		std::cout << result << std::endl;
 	} catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;

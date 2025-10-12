@@ -4,17 +4,17 @@
 
 class RPN {
 private:
-	std::stack<int> _stack;
+	std::stack<float> _stack;
 
 	bool isOperator(const std::string &token) const;
-	int applyOperation(const std::string &op, const int a, const int b) const;
+	float applyOperation(const std::string &op, const float a, const float b) const;
 
 public:
 	RPN();
-	RPN(std::stack<int> stk);
+	RPN(std::stack<float> stk);
 	RPN(const RPN &other);
 	RPN &operator=(const RPN &other);
 	~RPN();
 
-	int eval(const std::string &expr);
+	float eval(const std::string &expr);
 };

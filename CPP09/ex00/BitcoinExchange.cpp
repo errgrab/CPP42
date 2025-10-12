@@ -122,7 +122,6 @@ void BitcoinExchange::processInput(const std::string &filename) const {
 			continue;
 		}
 		if (!isValidDate(date)) {
-			std::cerr << "Error: bad input => " << line << std::endl;
 			continue;
 		}
 		double rate = getRate(date);
